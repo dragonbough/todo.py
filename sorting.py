@@ -2,7 +2,6 @@ import string
 import time
 
 list = []
-orderedList = []
 priorityList = []
 
 def SortList(list):
@@ -17,15 +16,10 @@ def SortList(list):
         print(itemPriority)
         priorityList.append(itemPriority)
         print(priorityList)
-    i = 0
-    for item in list:
-        list[i] = list[priorityList.index(min(priorityList))]
-        priorityList.remove(list[i])
-        i += 1
+                
     return list
 listlength = int(input ("How many things are in your list?"))
 for i in range(listlength):
     list.append(input ("Add to your list"))
 print("Sorting list...")
 print(SortList(list))
-
