@@ -21,4 +21,4 @@ for i in range(listlength):
 print("Sorting list...")
 print(SortList(list))
 
-#I can't do this man ffs
+#Think.
