@@ -10,7 +10,6 @@ guesscheck = []
 win = "null"
 stage = 0
 draw = "yes"
-count = 0
 
 def drawHangman():
     if stage == 7:
@@ -117,6 +116,7 @@ while win == "null":
         elif guess == "".join(letters):
             win = "win"
         else:
+            print ("\nIncorrect guess\n")
             guesscheck.append(guess)
             stage += 1
             if redraw == "yes":
