@@ -1,56 +1,81 @@
-row1 = [1, 2, 3]
-row2 = [4, 5, 6]
-row3 = [7, 8, 9]
+from operator import indexOf
 
-def Display():
-    print (*row1)
-    print (*row2)
-    print (*row3)
+def initBoard():
+    print (board[0], board[1], board[2])
+    print (board[3], board[4], board[5])
+    print (board[6], board[7], board[8])
 
-def FindRow(location, symbol):
-    if location in row1:
-        row1[location - 1] = symbol
-    if location in row2:
-        row2[location - 4] = symbol
-    if location in row3:
-        row3[location - 7] = symbol
+def checkBoard():
+    #for X
+    #down checks
+    if board[0] == "X" and board[3] == "X" and board[6] == "X":
+        return "X"
+    if board[1] == "X" and board[4] == "X" and board[7] == "X":
+        return "X" 
+    if board[2] == "X" and board[5] == "X" and board[8] == "X":
+        return "X"
+    #across checks
+    if board[0] == "X" and board[1] == "X" and board[2] == "X":
+        return "X"
+    if board[3] == "X" and board[4] == "X" and board[5] == "X":
+        return "X" 
+    if board[6] == "X" and board[7] == "X" and board[8] == "X":
+        return "X"
+    #diagonal checks
+    if board[0] == "X" and board[4] == "X" and board[8] == "X":
+        return "X"
+    if board[6] == "X" and board[4] == "X" and board[2] == "X":
+        return "X"
+    #for O
+    #down checks
+    if board[0] == "O" and board[3] == "O" and board[6] == "O":
+        return "O"
+    if board[1] == "O" and board[4] == "O" and board[7] == "O":
+        return "O" 
+    if board[2] == "O" and board[5] == "O" and board[8] == "O":
+        return "O"
+    #across checks
+    if board[0] == "O" and board[1] == "O" and board[2] == "O":
+        return "O"
+    if board[3] == "O" and board[4] == "O" and board[5] == "O":
+        return "O"
+    if board[6] == "O" and board[7] == "O" and board[8] == "O":
+        return "O"
+    #diagonal checks
+    if board[0] == "O" and board[4] == "O" and board[8] == "O":
+        return "O" 
+    if board[6] == "O" and board[4] == "O" and board[2] == "O":
+        return "O"
 
-def CheckWin():
-    if any(i == ("X", "X", "X") for i in (row1, row2, row3)):
-        win = x
-    if all(i == ("X") for i in (row1[0], row2[0], row3[0)):
-        win = x
-    if all(i == ("X") for i in (row1[1], row2[1], row3[1)):
-        win = x
-    if all(i == ("X") for i in (row1[2], row2[2], row3[2])):
-        win = x
-    elif row1[0] == "X" and row2[1] == "X" and row3[2] == "X":
-        win = x
-    elif row3[0] == "X" and row2[1] == "X" and row1[2] == "X":
-        win = x
-    elif any(i == ("O", "O", "O") for i in (row1, row2, row3)):
-        win = o
-    elif row1[0] == "O" and row2[1] == "O" and row3[2] == "O":
-        win = x
-    elif row3[0] == "O" and row2[1] == "O" and row1[2] == "O":
-        win = x
-    elif row1 != (
-        
+board = [0,1,2,
+         3,4,5,
+         6,7,8]
+
 turn = 0
 
-while win = null:
+while True:
+    initBoard()
     if turn == 0:
-        Display()
-        l = int(input ("Input location of X"))
-        FindRow(l, "X")
-        turn += 1 
+        coord = int(input ("Player 1, enter number of box you want to change"))
+        if coord in board:
+            board[board.index(coord)] = "X"
+            if checkBoard() == "X":
+                print ("Player 1 has won!")
+                break
+            turn = 1
+        else:
+            print ("Invalid selection")
+            continue
+    elif turn == 1:
+        coord = int(input ("Player 2, enter number of box you want to change"))
+        if coord in board:
+            board[board.index(coord)] = "O"
+            if checkBoard() == "O":
+                print ("Player 2 has won!")
+                break
+            turn = 0
+        else:
+            print ("Invalid selection")
+            continue
 
-    if turn == 1:
-        Display()
-        l = int(input ("Input location of O"))
-        FindRow(l, "O")
-        turn += 1
 
-    if turn > 1:
-        turn = 0
-        
