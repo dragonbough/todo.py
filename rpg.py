@@ -104,8 +104,10 @@ def Battle(enemy):
                     runCount += 1
                     print("You failed to escape!")
                     turn = enemy
-        
-    print ("You have successfully defeated the " + enemy)
+    if stats["player"][health] == 0:
+       print ("You died!")
+    else:
+        print ("You have successfully defeated the " + enemy)
 
 Battle("Slime")
 print ("H")
