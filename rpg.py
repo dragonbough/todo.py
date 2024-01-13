@@ -1,10 +1,10 @@
 import random
 
-#Stats for the player and mobs in the world, in order of health, attack and then speed.
-stats = {"player":[100, 10, 10],
-         "Bat":[25, 20, 15],
-         "Spider":[10, 5, 50],
-         "Slime":[25, 10, 5]}
+#Stats for the player and mobs in the world, in order of health, attack, defense and then speed.
+stats = {"player":[100, 10, 10, 10],
+         "Bat":[70, 15, 3, 20],
+         "Spider":[90, 12, 8, 15],
+         "Slime":[80, 8, 5, 5]}
 
 #Stats for the items in the world with tags and then integers after
 items = {"potion":["health", +1],
@@ -12,12 +12,15 @@ items = {"potion":["health", +1],
 
 health = 0
 attack = 1 
-speed = 2
+defense = 2
+speed = 3
 
 playerHealth = 0
 enemyHealth = 0
 playerAtt = 0 
 enemyAtt = 0
+playerDefense = 0
+enemyDefense = 0
 playerSpeed = 0
 enemySpeed = 0
 
@@ -26,13 +29,16 @@ bag = ["Potion", "Boost Potion"]
 runCount = 0
 
 def PlayerAttack(enemy):
-    global playerAtt, enemyHealth
-    damage = random.randint(playerAtt - 2, playerAtt)
+    global playerAtt, enemyHealth, enemyDefense
+    if playerAtt >= enemyDefense:
+        damage = random.randint(playerAtt - 2, playerAtt) * 2 - enemyDefense
+    else:
+        damage = random.randint(playerAtt - 2, playerAtt) * playerAtt / enemyDefense
     enemyHealth -= damage 
-    return ("You dealt " + str(damage) + " damage against the " + enemy)
+    return ("\nYou dealt " + str(damage) + " damage against the " + enemy)
 
 def Select(item):
-    global playerHealth, playerAttack
+    global playerHealth, playerAttack, playerDefense
     message = []
     if item not in items:
         return False
@@ -62,12 +68,28 @@ def Select(item):
                 message.append("and you lost " + str(attackGain) + " attack")
             else:
                 message.append("You lost " + str(attackGain) + " attack")
+    if "defense" in items[item]:
+        defenseGain = items[item][items[item].index("defense") + 1]
+        playerDefense += defenseGain
+        if defenseGain > 0:
+            if len(message) >= 1:
+                message.append("and you gained " + str(defenseGain) + " defense")
+            else:
+                message.append("You gained " + str(defenseGain) + " defense")
+        if defenseGain < 0:
+            if len(message) >= 1:
+                message.append("and you lost " + str(defenseGain) + " defense")
+            else:
+                message.append("You lost " + str(defenseGain) + " defense")
     print ("You used the " + item)
     return " ".join(message) + "!"
 
 def enemyAttack(enemy):
-    global enemyAtt, playerHealth
-    damage = random.randint(enemyAtt - 2, enemyAtt)
+    global enemyAtt, playerHealth, playerDefense
+    if enemyAtt >= playerDefense:
+        damage = random.randint(enemyAtt - 2, enemyAtt) * 2 - playerDefense
+    else: 
+        damage = random.randint(enemyAtt - 2, enemyAtt) * enemyAtt / playerDefense
     playerHealth -= damage 
     return ("\nThe " + enemy + " dealt " + str(damage) + " damage against you!\n")
 
@@ -79,8 +101,11 @@ def Battle(enemy):
     enemyHealth = stats[enemy][health]
     playerAtt = stats["player"][attack] 
     enemyAtt = stats[enemy][attack]
+    playerDefense = stats["player"][defense]
+    enemyDefense = stats[enemy][defense]
     playerSpeed = stats["player"][speed]
     enemySpeed = stats[enemy][speed]
+    enemyBarHealth = 100 / enemyHealth
     print ("You have been approached by a " + enemy + "!")
     if playerSpeed > enemySpeed:
         turn = "player"
@@ -91,9 +116,18 @@ def Battle(enemy):
             print(enemyAttack(enemy))
             turn = "player"
         while turn == "player":
-            print ("HP: " + str(playerHealth))
-            print (enemy + " HP: " + str(enemyHealth))
-            print ("What will you do?")
+            healthBar = []
+            for i in range(round(playerHealth / 8.3)):
+                healthBar.append("_")
+            print ("".join(healthBar))
+            healthBar.clear()
+            print ("Your HP: " + str(playerHealth))
+            for i in range(round((enemyBarHealth * enemyHealth) / 8.3)):
+                healthBar.append("_")
+            print ("".join(healthBar))
+            healthBar.clear()
+            print (enemy + " HP: " + str(enemyHealth) + "\n")
+            print ("What will you do?:")
             print ("Attack")
             print ("Bag")
             choice = input("Run\n")
@@ -129,4 +163,4 @@ def Battle(enemy):
 
 Battle("Slime")
 Battle("Bat")
-Battle("Bat")
+Battle("Spider")
