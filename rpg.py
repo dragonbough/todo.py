@@ -5,6 +5,7 @@ stats = {"player":[100, 10, 10],
          "Bat":[25, 20, 15],
          "Spider":[10, 5, 50],
          "Slime":[25, 10, 5]}
+
 #Stats for the items in the world with tags and then integers after
 items = {"potion":["health", +1],
          "boost potion":["health", -1, "attack", +1]}
@@ -13,22 +14,31 @@ health = 0
 attack = 1 
 speed = 2
 
+playerHealth = 0
+enemyHealth = 0
+playerAtt = 0 
+enemyAtt = 0
+playerSpeed = 0
+enemySpeed = 0
+
 bag = ["Potion", "Boost Potion"]
 
 runCount = 0
 
 def PlayerAttack(enemy):
-    damage = random.randint(stats["player"][attack] - 2, stats["player"][attack])
-    stats[enemy][health] -= damage 
+    global playerAtt, enemyHealth
+    damage = random.randint(playerAtt - 2, playerAtt)
+    enemyHealth -= damage 
     return ("You dealt " + str(damage) + " damage against the " + enemy)
 
 def Select(item):
+    global playerHealth, playerAttack
     message = []
     if item not in items:
         return False
     elif "health" in items[item]:
         healthGain = items[item][items[item].index("health") + 1]
-        stats["player"][health] += healthGain
+        playerHealth += healthGain
         if healthGain > 0:
             if len(message) >= 1:
                 message.append("and you gained " + str(healthGain) + " health")
@@ -41,7 +51,7 @@ def Select(item):
                 message.append("You lost " + str(healthGain) + " health")
     if "attack" in items[item]:
         attackGain = items[item][items[item].index("attack") + 1]
-        stats["player"][attack] += attackGain
+        playerAttack += attackGain
         if attackGain > 0:
             if len(message) >= 1:
                 message.append("and you gained " + str(attackGain) + " attack")
@@ -56,25 +66,33 @@ def Select(item):
     return " ".join(message) + "!"
 
 def enemyAttack(enemy):
-    damage = random.randint(stats[enemy][attack] - 2, stats[enemy][attack])
-    stats["player"][health] -= damage 
+    global enemyAtt, playerHealth
+    damage = random.randint(enemyAtt - 2, enemyAtt)
+    playerHealth -= damage 
     return ("\nThe " + enemy + " dealt " + str(damage) + " damage against you!\n")
 
 def Battle(enemy):
     global turn 
     global runCount
+    global playerHealth, enemyHealth, playerAtt, enemyAtt, playerSpeed, enemySpeed 
+    playerHealth = stats["player"][health]
+    enemyHealth = stats[enemy][health]
+    playerAtt = stats["player"][attack] 
+    enemyAtt = stats[enemy][attack]
+    playerSpeed = stats["player"][speed]
+    enemySpeed = stats[enemy][speed]
     print ("You have been approached by a " + enemy + "!")
-    if stats["player"][speed] > stats[enemy][speed]:
+    if playerSpeed > enemySpeed:
         turn = "player"
     else:
         turn = enemy
-    while stats[enemy][health] > 0:
+    while enemyHealth > 0:
         while turn == enemy:
             print(enemyAttack(enemy))
             turn = "player"
         while turn == "player":
-            print ("HP: " + str(stats["player"][health]))
-            print (enemy + " HP: " + str(stats[enemy][health]))
+            print ("HP: " + str(playerHealth))
+            print (enemy + " HP: " + str(enemyHealth))
             print ("What will you do?")
             print ("Attack")
             print ("Bag")
@@ -96,7 +114,7 @@ def Battle(enemy):
                         break
                 turn = enemy 
             if choice == "run":
-                probability = (((stats["player"][speed] * 128)/stats[enemy][speed]) + 30 * runCount) // 265
+                probability = (((playerSpeed * 128) / enemySpeed) + 30 * runCount) // 265
                 if random.randint(0, 255) < probability:
                     runCount += 1
                     return "end"
@@ -104,11 +122,11 @@ def Battle(enemy):
                     runCount += 1
                     print("You failed to escape!")
                     turn = enemy
-    if stats["player"][health] == 0:
+    if playerHealth == 0:
        print ("You died!")
     else:
         print ("You have successfully defeated the " + enemy)
 
 Battle("Slime")
-print ("H")
+Battle("Bat")
 Battle("Bat")
