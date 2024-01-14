@@ -43,49 +43,36 @@ def PlayerAttack(enemy):
     return ("\nYou dealt " + str(damage) + " damage against the " + enemy + "\n")
 
 def Select(item):
-    global playerHealth, playerAttack, playerDefense
+    global playerHealth, playerAtt, playerDefense
+
     message = []
+    def AppendMessage(itemType):
+        if gain > 0:
+            if len(message) >= 1:
+                    message.append("and you gained " + str(gain) + " " + itemType)
+            else:
+                    message.append("You gained " + str(gain) + " " + itemType)
+        if gain < 0:
+            if len(message) >= 1:
+                message.append("and you lost " + str(gain) + " " + itemType)
+            else:
+                message.append("You lost " + str(gain) + " " + itemType)
+
     if item not in items:
         return False
     elif "health" in items[item]:
-        healthGain = items[item][items[item].index("health") + 1]
-        playerHealth += healthGain
-        if healthGain > 0:
-            if len(message) >= 1:
-                message.append("and you gained " + str(healthGain) + " health")
-            else:
-                message.append("You gained " + str(healthGain) + " health")
-        if healthGain < 0:
-            if len(message) >= 1:
-                message.append("and you lost " + str(healthGain) + " health")
-            else:
-                message.append("You lost " + str(healthGain) + " health")
+        gain = items[item][items[item].index("health") + 1]
+        playerHealth += gain
+        AppendMessage("health")
     if "attack" in items[item]:
-        attackGain = items[item][items[item].index("attack") + 1]
-        playerAttack += attackGain
-        if attackGain > 0:
-            if len(message) >= 1:
-                message.append("and you gained " + str(attackGain) + " attack")
-            else:
-                message.append("You gained " + str(attackGain) + " attack")
-        if attackGain < 0:
-            if len(message) >= 1:
-                message.append("and you lost " + str(attackGain) + " attack")
-            else:
-                message.append("You lost " + str(attackGain) + " attack")
+        gain = items[item][items[item].index("attack") + 1]
+        playerAtt += gain
+        AppendMessage("attack")
     if "defense" in items[item]:
-        defenseGain = items[item][items[item].index("defense") + 1]
-        playerDefense += defenseGain
-        if defenseGain > 0:
-            if len(message) >= 1:
-                message.append("and you gained " + str(defenseGain) + " defense")
-            else:
-                message.append("You gained " + str(defenseGain) + " defense")
-        if defenseGain < 0:
-            if len(message) >= 1:
-                message.append("and you lost " + str(defenseGain) + " defense")
-            else:
-                message.append("You lost " + str(defenseGain) + " defense")
+        gain = items[item][items[item].index("") + 1]
+        playerDefense += gain
+        AppendMessage("defense")
+
     print ("You used the " + item)
     return " ".join(message) + "!"
 
