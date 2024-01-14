@@ -4,7 +4,9 @@ import random
 stats = {"player":[100, 10, 10, 10],
          "Bat":[70, 15, 3, 20],
          "Spider":[90, 12, 8, 15],
-         "Slime":[80, 8, 5, 5]}
+         "Slime":[80, 8, 5, 5],
+         "DeathTest":[1000, 100, 100, 100],
+         "WinTest":[1, 1, 1, 1] }
 
 #Stats for the items in the world with tags and then integers after
 items = {"potion":["health", +1],
@@ -28,6 +30,9 @@ bag = ["Potion", "Boost Potion"]
 
 runCount = 0
 
+winCount = 0
+lossCount = 0 
+
 def PlayerAttack(enemy):
     global playerAtt, enemyHealth, enemyDefense
     if playerAtt >= enemyDefense:
@@ -35,7 +40,7 @@ def PlayerAttack(enemy):
     else:
         damage = random.randint(playerAtt - 2, playerAtt) * playerAtt / enemyDefense
     enemyHealth -= damage 
-    return ("\nYou dealt " + str(damage) + " damage against the " + enemy)
+    return ("\nYou dealt " + str(damage) + " damage against the " + enemy + "\n")
 
 def Select(item):
     global playerHealth, playerAttack, playerDefense
@@ -94,9 +99,7 @@ def enemyAttack(enemy):
     return ("\nThe " + enemy + " dealt " + str(damage) + " damage against you!\n")
 
 def Battle(enemy):
-    global turn 
-    global runCount
-    global playerHealth, enemyHealth, playerAtt, enemyAtt, playerSpeed, enemySpeed 
+    global turn, runCount, playerHealth, enemyHealth, playerAtt, enemyAtt, playerSpeed, enemySpeed, winCount, lossCount
     playerHealth = stats["player"][health]
     enemyHealth = stats[enemy][health]
     playerAtt = stats["player"][attack] 
@@ -106,16 +109,20 @@ def Battle(enemy):
     playerSpeed = stats["player"][speed]
     enemySpeed = stats[enemy][speed]
     enemyBarHealth = 100 / enemyHealth
-    print ("You have been approached by a " + enemy + "!")
+    run = False 
+
+    print ("\nYou have been approached by a " + enemy + "!")
     if playerSpeed > enemySpeed:
         turn = "player"
     else:
         turn = enemy
-    while enemyHealth > 0:
+    while enemyHealth > 0 and playerHealth > 0:
         while turn == enemy:
             print(enemyAttack(enemy))
             turn = "player"
         while turn == "player":
+            if playerHealth <= 0:
+                break
             healthBar = []
             for i in range(round(playerHealth / 8.3)):
                 healthBar.append("_")
@@ -151,16 +158,29 @@ def Battle(enemy):
                 probability = (((playerSpeed * 128) / enemySpeed) + 30 * runCount) // 265
                 if random.randint(0, 255) < probability:
                     runCount += 1
-                    return "end"
+                    run = True 
+                    break
                 else:
                     runCount += 1
                     print("You failed to escape!")
                     turn = enemy
-    if playerHealth == 0:
-       print ("You died!")
-    else:
-        print ("You have successfully defeated the " + enemy)
+        if enemyHealth <= 0:
+            print ("You successfully slayed the " + enemy + "!")
+            print ("You win!")
+            winCount += 1
+            return "win"
+        elif playerHealth <= 0:
+            print ("You pass out at the feet of the " + enemy)
+            print ("You lost!")
+            lossCount += 1 
+            return "loss"
+        elif run == True:
+            print ("You successfully escaped from the " + enemy + "!")
+            print ("Yipee!")
+            return "escape"
+
+
+        
+    
 
 Battle("Slime")
-Battle("Bat")
-Battle("Spider")
