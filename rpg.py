@@ -165,9 +165,5 @@ def Battle(enemy):
             print ("You successfully escaped from the " + enemy + "!")
             print ("Yipee!")
             return "escape"
-
-
-        
     
-
 Battle("Slime")
