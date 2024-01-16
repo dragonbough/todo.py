@@ -1,7 +1,7 @@
 import random
 
 #Stats for the player and mobs in the world, in order of health, attack, defense and then speed.
-stats = {"player":[100, 10, 10, 10],
+stats = {"player":[1, 100, 10, 10, 10],
          "Bat":[70, 15, 3, 20],
          "Spider":[90, 12, 8, 15],
          "Slime":[80, 8, 5, 5],
@@ -11,6 +11,7 @@ stats = {"player":[100, 10, 10, 10],
 #Stats for the items in the world with tags and then integers after
 items = {"potion":["health", +1],
          "boost potion":["health", -1, "attack", +1]}
+
 
 health = 0
 attack = 1 
@@ -32,6 +33,7 @@ runCount = 0
 
 winCount = 0
 lossCount = 0 
+
 
 def PlayerAttack(enemy):
     global playerAtt, enemyHealth, enemyDefense
@@ -165,5 +167,5 @@ def Battle(enemy):
             print ("You successfully escaped from the " + enemy + "!")
             print ("Yipee!")
             return "escape"
-    
-Battle("Slime")
+
+inventory = {"armor": "", "weapon": "", "shoes":""}
