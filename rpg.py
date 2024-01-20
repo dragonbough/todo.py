@@ -1,4 +1,5 @@
 import random
+from string import octdigits
 
 #Stats for the player and mobs in the world, in order of health, attack, defense and then speed.
 stats = {"player":[1, 100, 10, 10, 10],
@@ -27,7 +28,7 @@ enemyDefense = 0
 playerSpeed = 0
 enemySpeed = 0
 
-bag = ["Potion", "Boost Potion"]
+inventory = ["Potion", "Boost Potion"]
 
 runCount = 0
 
@@ -125,13 +126,13 @@ def Battle(enemy):
             print (enemy + " HP: " + str(enemyHealth) + "\n")
             print ("What will you do?:")
             print ("Attack")
-            print ("Bag")
+            print ("Inventory")
             choice = input("Run\n")
             if choice == "attack":
                 print(PlayerAttack(enemy))
                 turn = enemy 
-            if choice == "bag":
-                for i in bag:
+            if choice == "inventory":
+                for i in inventory:
                     print (i)
                 while True:
                     itemChoice = input ("What item will you use?\n")
@@ -168,4 +169,11 @@ def Battle(enemy):
             print ("Yipee!")
             return "escape"
 
-inventory = {"armor": "", "weapon": "", "shoes":""}
+body = {"weapon":"", "armour":"", "shoes":""}
+
+def AppendStats():
+    for i in body:
+        body[i][]
+
+AppendStats()
+Battle("Bat")
