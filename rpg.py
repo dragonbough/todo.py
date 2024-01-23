@@ -2,7 +2,7 @@ import random
 from string import octdigits
 
 #Stats for the player and mobs in the world, in order of health, attack, defense and then speed.
-stats = {"player":[1, 100, 10, 10, 10],
+stats = {"player":[100, 10, 10, 10],
          "Bat":[70, 15, 3, 20],
          "Spider":[90, 12, 8, 15],
          "Slime":[80, 8, 5, 5],
@@ -10,9 +10,12 @@ stats = {"player":[1, 100, 10, 10, 10],
          "WinTest":[1, 1, 1, 1] }
 
 #Stats for the items in the world with tags and then integers after
-items = {"potion":["health", +1],
-         "boost potion":["health", -1, "attack", +1]}
+items = {"potion":["health", +1], "boost potion":["health", -1, "attack", +1], "wooden branch":["weapon", +2], 
+         "polyester hoodie":["armour", +2], "sneakers":["shoes"]}
 
+bag = ["Potion", "Boost Potion"]
+
+body = {"weapon":"", "armour":"", "shoes":""}
 
 health = 0
 attack = 1 
@@ -28,10 +31,7 @@ enemyDefense = 0
 playerSpeed = 0
 enemySpeed = 0
 
-inventory = ["Potion", "Boost Potion"]
-
 runCount = 0
-
 winCount = 0
 lossCount = 0 
 
@@ -126,13 +126,13 @@ def Battle(enemy):
             print (enemy + " HP: " + str(enemyHealth) + "\n")
             print ("What will you do?:")
             print ("Attack")
-            print ("Inventory")
+            print ("Bag")
             choice = input("Run\n")
             if choice == "attack":
                 print(PlayerAttack(enemy))
                 turn = enemy 
-            if choice == "inventory":
-                for i in inventory:
+            if choice == "bag":
+                for i in bag:
                     print (i)
                 while True:
                     itemChoice = input ("What item will you use?\n")
@@ -169,11 +169,37 @@ def Battle(enemy):
             print ("Yipee!")
             return "escape"
 
-body = {"weapon":"", "armour":"", "shoes":""}
+def EquipItem(itemToEquip):
+    body[items[itemToEquip][1]] == itemToEquip
+    
+def CollectItem(itemCollected):
+    print ("You found a " + itemCollected)
+    print (itemCollected + str(items[itemCollected]))
+    bag.append(itemCollected)
+    x = input("Do you want to equip this item?")
+    if x == "yes":
+        EquipItem(itemCollected)
+    else:
+        return 
 
-def AppendStats():
-    for i in body:
-        body[i][]
-
-AppendStats()
 Battle("Bat")
+print ("You encountered a shrine, in which you must roll a dice and become lucky enough to win loot")
+gameWin = False
+dice = input ("Roll dice?")
+if dice == "yes":
+    while gameWin == False:
+        if random.randint(1, 6) == random.randint(1, 6):
+            print ("The shrine accepts your luck")
+            gameWin == True
+        else:
+            print ("The shrine revels your defeat, try again")
+            break
+elif dice == "no":
+    print ("uh ok")
+
+if gameWin == True:
+    CollectItem("sneakers")
+    
+    
+    
+
