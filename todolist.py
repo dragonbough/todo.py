@@ -24,40 +24,42 @@ def CreateList():
 
 
 def EditList(array):
-    DisplayList(array)
-    choice = input ("Sort [S] Add tasks [A] Delete tasks[D] ")
-    if choice.lower() == "s":
-        newOrder = []
-        for i in array:
-            newOrder.append(" ")
-        for i in array:
-            DisplayList(newOrder)
-            print (i)
-            while True:
-                index = int(input("Where would you like to put this task?")) - 1
-                if newOrder[index] == " ":
-                    newOrder[index] = i
-                    break
+    while True:
+        DisplayList(array)
+        choice = input ("Sort [S] Add tasks [A] Delete tasks [D] Exit edit menu [E]")
+        if choice.lower() == "s":
+            newOrder = []
+            for i in array:
+                newOrder.append(" ")
+            for i in array:
+                DisplayList(newOrder)
+                print (i)
+                while True:
+                    index = int(input("Where would you like to put this task?")) - 1
+                    if newOrder[index] == " ":
+                        newOrder[index] = i
+                        break
+                    else:
+                        print ("Invalid slot")
+                        newOrder[newOrder.index(" ")] = i
+            todoListDict.update({list(todoListDict.keys())[list(todoListDict.values()).index(array)]:newOrder})
+        if choice.lower() == "a":
+            endAppend = False
+            i = len(array)
+            while endAppend == False:
+                task = input ("\nInput Task (" + str(i) + "); Stop [ENTER]:  ")
+                if len(task) > 0:
+                    array.append(task)
+                    DisplayList(array)
+                    i += 1
                 else:
-                    print ("Invalid slot")
-                    newOrder[newOrder.index(" ")] = i
-        todoListDict.update({list(todoListDict.keys())[list(todoListDict.values()).index(array)]:newOrder})
-    if choice.lower() == "a":
-        endAppend = False
-        i = len(array)
-        while endAppend == False:
-            task = input ("\nInput Task (" + str(i) + "); Stop [ENTER]:  ")
-            if len(task) > 0:
-                array.append(task)
-                DisplayList(array)
-                i += 1
-            else:
-                endAppend = True
-    if choice.lower() == "d":
-        delTasks = list(input ("Enter the task numbers you want to delete separated by commas.").split(","))
-        for i in range(len(delTasks)):
-            
-            
+                    endAppend = True
+        if choice.lower() == "d":
+            delTask = int(input("What task would you like to remove? "))
+            if delTask <= len(array):
+                del array[delTask-1]
+        if choice.lower() == "e":
+            break
 
 print ("-----------------")
 print ("Welcome to PyList")
