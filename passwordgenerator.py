@@ -1,12 +1,29 @@
 import random
-import math
 import string
-import time
-import pyperclip
 
-passDigAmount = int(input ("How many digits do you want your password to be? Enter number:"))
-password = "".join(random.choices(string.ascii_lowercase + string.ascii_uppercase + string.digits, k = passDigAmount))
-print ("Your generated password is:", password)
-pyperclip.copy(password)
-print ("Password copied to clipboard!")
-time.sleep(5)    
+password = []
+
+def Generate(length, rules):
+    global password
+    for i in range(length):
+        rule = random.randint(len(rules))
+        if rule == "u":
+            password.append(string.ascii_uppercase[random.randint(1, len(string.ascii_uppercase)-1)])
+        if rule == "l":
+            password.append(string.ascii_lowercase[random.randint(1, len(string.ascii_lowercase)-1)])
+        if rule == "p":
+            password.append(string.punctuation[random.randint(1, len(string.punctuation)-1)])
+    return "".join(password)
+
+enabled = []
+length = int(input ("How long do you want your password to be?"))
+while True:
+    i = 0
+    if i // 4 == 0:
+        print ("Uppercases [U] Lowercases [L] Digits [D] Punctuation [P]")
+        print ("GENERATE [G]")
+    choice = input ("")
+    enabled.append(choice)
+    if choice.lower() == "g":
+        Generate(length, enabled)
+    
