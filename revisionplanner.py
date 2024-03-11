@@ -1,6 +1,9 @@
 subjects = []
 subRanks = {}
-subHours = {}
+paperHours = {}
+subPapers = {}
+papers = []
+
 
 #Ask for subjects until user inputs empty string (presses enter)
 i = 1
@@ -9,7 +12,17 @@ while len(subject) != 0:
     subjects.append(subject)
     subject = input("Enter Subject " + str(i+1) + " OR press enter to stop: ")
     i+=1
-    
+
+for x in subjects:
+    j = 1
+    paper = input("Enter Paper " + str(j) + " for " + x + " OR press enter to stop: ")
+    while len(paper) != 0:
+        papers.append(paper)
+        paper = input("Enter Paper " + str(j+1) + " for " + x + " OR press enter to stop: ")
+        j+=1
+    subPapers.update({x:papers})
+    papers = []
+
 #Asks for ranking of each subject and assigns it to the subRanks dictionary.
 for i in subjects:
     rank = int(input("Rank " + str(i) + " revision time on a scale of 1 - 9"))
@@ -31,11 +44,17 @@ for x in subRanks.keys():
 #Calculates and displays the amount of time allocated to each value based off of their rankings.
 avgHours = int(input("How many hours on average do you want to spend revising a day?"))
 for i in subRanks.keys():
-    till = int(input("How many days do you have until your " + i + " exam?")) * 12
-    hours = int(round((till / sum(subRanks.values())) * subRanks[i]))
-    subHours.update({i : hours})
+    print (i)
+    for j in subPapers[i]:
+        till = int(input("How many days do you have until your " + j + " exam?")) * 12
+        hours = int(round(((till / sum(subRanks.values())) * subRanks[i])/len(subPapers[i])))
+        paperHours.update({j : hours})
 
-for x in subHours.keys():
-    print (str(x) + ", Hours: " + str(subHours[x]))
+for x in subPapers.keys():
+    sum = 0
+    for y in subPapers[x]:
+        print ("    " + y + ", Hours:" + str(paperHours[y]))
+        sum+=paperHours[y]
+    print (x + ", Total Hours:" + str(sum))
 
         
