@@ -1,1 +1,0 @@
-This is my portfolio of projects that I have made using Python. I plan to use these to help display a future employer my skill and the amount of effort I am willing to put into coding, what I love. This idea originated in 2022, when I decided that it would be a great way to track my progress. Enjoy scrolling through my code to see the things I have created.
