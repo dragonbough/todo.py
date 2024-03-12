@@ -1,1 +1,17 @@
-This is my portfolio of projects that I have made using Python. I plan to use these to help display a future employer my skill and the amount of effort I am willing to put into coding, what I love. This idea originated in 2022, when I decided that it would be a great way to track my progress. Enjoy scrolling through my code to see the things I have created.
+
+![Logo](https://i.imgur.com/wpVaa7s.png)
+
+
+# python projects
+
+This repository holds all the python files that I have created, whether for fun or personal application. You will watch this repository grow with the expansion of my Python skill, as I also take on more projects.
+
+### Roadmap
+
+<img align="left" width="100" height="100" src="https://i.imgur.com/KhG7V9q.png">
+
+This is my Trello list for the Python programming language. Although the list is long, and I have not progressed very far (at the time of writing this), I believe I am well equipped with the language. I understand the basics, so the next item on my agenda is learning the theory of object-oriented programming (OOP). When I progress through every item in this list, I can truly say that I have mastered Python. Just you wait and see.
+### Lessons Learned
+
+
+
