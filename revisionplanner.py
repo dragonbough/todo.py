@@ -1,3 +1,4 @@
+import time
 subjects = []
 subRanks = {}
 paperHours = {}
@@ -46,8 +47,8 @@ avgHours = int(input("How many hours on average do you want to spend revising a 
 for i in subRanks.keys():
     print (i)
     for j in subPapers[i]:
-        till = int(input("How many days do you have until your " + j + " exam?")) * 12
-        hours = int(round(((till / sum(subRanks.values())) * subRanks[i])/len(subPapers[i])))
+        till = int(input("How many days do you have until your " + j + " exam?")) * avgHours
+        hours = int(round(((till / sum(subRanks.values())) * subRanks[i])))
         paperHours.update({j : hours})
 
 for x in subPapers.keys():
@@ -56,5 +57,7 @@ for x in subPapers.keys():
         print ("    " + y + ", Hours:" + str(paperHours[y]))
         sum+=paperHours[y]
     print (x + ", Total Hours:" + str(sum))
+
+time.sleep(300)
 
         
