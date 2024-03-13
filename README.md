@@ -1,5 +1,6 @@
 
-![Logo](https://i.imgur.com/wpVaa7s.png)
+![Python](https://github.com/dragonbough/python/assets/99271006/83e718f3-1927-431d-adbd-6f808fc2330d)
+
 
 
 # python projects
