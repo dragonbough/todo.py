@@ -53,10 +53,11 @@ for i in subRanks.keys():
 
 for x in subPapers.keys():
     sum = 0
+    print (x + ", Total Hours:" + str(sum))
     for y in subPapers[x]:
         print ("    " + y + ", Hours:" + str(paperHours[y]))
         sum+=paperHours[y]
-    print (x + ", Total Hours:" + str(sum))
+    
 
 time.sleep(300)
 
