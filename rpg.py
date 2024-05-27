@@ -184,21 +184,7 @@ def CollectItem(itemCollected):
 
 Battle("Bat")
 print ("You encountered a shrine, in which you must roll a dice and become lucky enough to win loot")
-gameWin = False
-dice = input ("Roll dice?")
-if dice == "yes":
-    while gameWin == False:
-        if random.randint(1, 6) == random.randint(1, 6):
-            print ("The shrine accepts your luck")
-            gameWin = True
-            break
-        else:
-            print ("The shrine revels your defeat, try again")
-            dice = input ("Roll dice again?")
-elif dice == "no":
-    print ("uh ok")
-CollectItem("sneakers")
-    
+
     
     
     
