@@ -19,7 +19,7 @@ def InsertSort(arr):
 
 # def MergeSort(arr):
 #     for i in range(len(arr)):
-         
+         #do something
     
 def LinearSearch(arr, i):
     count = 0
