@@ -16,10 +16,6 @@ def InsertSort(arr):
                 arr.pop(i)
                 arr.insert(j, x)
     return arr
-
-# def MergeSort(arr):
-#     for i in range(len(arr)):
-         #do something
     
 def LinearSearch(arr, i):
     count = 0
