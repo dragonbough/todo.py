@@ -114,7 +114,7 @@ while not choice or choice != "e":
         print ("No completed tasks")
     else:
         for completed in completed_tasks:
-            print (completed)
+            print ("✓" + completed)
     
     print("\n" + set_error)
     set_error = ""
