@@ -37,10 +37,10 @@ def display_completed(filename):
 def append(filename, task):
     with open(filename, "a") as todo:
         if type(task) is not str:
-            raise TypeError("append() type error: task not a string.")
+            raise TypeError("Task not a string.")
             return
         if len(task) == 0:
-            raise ValueError("append() value error: task is empty")
+            raise ValueError("Task is empty")
             return
         todo.write("~" + task + "\n")
 
@@ -48,6 +48,8 @@ def append(filename, task):
 def delete(filename, task_index):
     with open(filename, "r+") as todo:
         tasks = list(todo)
+        if task_index > len(display(filename)) or task_index < 0:
+            raise IndexError("Task index outside of range")
         tasks.pop(task_index)
         #clears file
         todo.truncate(0)
@@ -66,11 +68,13 @@ def complete(filename, task_index):
     with open("completed.txt", "a+") as completed:
         completed.write(str(filename) + "," + str(tasks[task_index]) + "\n")
         
+        
 ##################
 
 choice = "."
 set_error = ""
 reset = False
+new_file = False
 
 while not choice or choice != "e":
     
@@ -81,15 +85,16 @@ while not choice or choice != "e":
         #falsy - if filenames not empty...
         if file_names:
             latest_file = file_names[len(file_names)-1].strip()
-        else:
-            latest_file = input("Enter todo list name")
-            if type(latest_file) is str and latest_file:
+        if reset == True:
+            break
+        if new_file == True or not file_names:
+            new_file = False 
+            latest_file = input("\nEnter todo list name:\n")
+            if type(latest_file) is str and latest_file and latest_file + "\n" not in file_names:
                 files.write(latest_file + "\n")
             elif reset == False:
-                while type(latest_file) is not str or not latest_file:
-                    latest_file = input("Enter todo list name")
-            elif reset == True:
-                break
+                while type(latest_file) is not str or not latest_file or latest_file + "\n" in file_names:
+                    latest_file = input("Enter todo list name:\n")
     ##################################################
     
     current_file = init(latest_file)
@@ -113,8 +118,7 @@ while not choice or choice != "e":
     
     print("\n" + set_error)
     set_error = ""
-    print("[c] mark task completed  [a] append task  [d] delete task  [l] lists  [e] exit")
-    choice = input("")
+    choice = input("[c] mark task completed  [a] append task  [d] delete task  [s] switch lists  [e] exit\n")
     
     if choice.lower() == "c":
         print (" ")
@@ -126,16 +130,16 @@ while not choice or choice != "e":
             continue
         try:
             index = int(input("index:\n")) - 1
-        except:
-            set_error = "Invalid input"
+        except Exception as error:
+            set_error = str(error)
         else:
             complete(current_file, index)
         
     elif choice.lower() == "a":
         try:
             append(current_file, input("\n~"))
-        except:
-            set_error = "Invalid input"
+        except Exception as error:
+            set_error = str(error)
                                 
     if choice.lower() == "d":
         print (" ")
@@ -143,18 +147,55 @@ while not choice or choice != "e":
             tasks = display(current_file)
             for task_index in range(len(tasks)):
                 print (tasks[task_index].replace("~", f"~{task_index+1}~ "))
-        except IndexError:
-            set_error = "List is empty"
+        except Exception as error:
+            set_error = str(error)
             continue
         try:
             index = int(input("index:\n")) - 1
-        except:
-            set_error = "Invalid input"
+        except Exception as error:
+            set_error = str(error)
         else:
-            delete(current_file, index)
+            try:
+                delete(current_file, index)
+            except Exception as error:
+                set_error = str(error)
+            
+    if choice.lower() == "s":
+        choice = "."
+        print(" ")
+        try:
+            files = display("files.txt")
+            for file_index in range(len(files)):
+                print (f"~{file_index+1}~{files[file_index]}")
+        except Exception as error:
+            set_error = str(error)
+            continue
+        print(f"~{len(files)+1}~ *add new list*")
+        try:
+            index = int(input("index:\n")) - 1
+        except Exception as error:
+            set_error = str(error)
+            
+        if index == len(files):
+            new_file = True
+        else:
+            try:
+                with open("files.txt", "w") as files_txt:
+                    new_latest = files.pop(index)
+                    files.append(new_latest)
+                    files_txt.truncate(0)
+                    for file in files:
+                        if file:
+                            files_txt.write(file)
+            except Exception as error:
+                set_error = str(error)
+                
     #DEBUG
     if choice.lower() == "reset":
-        os.remove(current_file)
+        with open("files.txt", "r") as files_txt:
+            files = list(files_txt)
+            for file in files:
+                os.remove(file.strip()+".txt")
         with open("completed.txt", "w+") as completed:
             completed.truncate(0)
         with open("files.txt", "w+") as file_names:
