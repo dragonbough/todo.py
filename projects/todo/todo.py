@@ -75,6 +75,7 @@ choice = "."
 set_error = ""
 reset = False
 new_file = False
+completed_shown = False
 
 while not choice or choice != "e":
     
@@ -110,11 +111,19 @@ while not choice or choice != "e":
             
     print("\ncompleted:")
     completed_tasks = display_completed(current_file)
+    completed_tasks = completed_tasks[::-1]
     if not completed_tasks:
         print ("No completed tasks")
-    else:
+    elif completed_shown == False:
+        for completed_num in range(len(completed_tasks)):
+                if completed_num <= 4:
+                    print ("✓" + completed_tasks[completed_num])
+        if len(completed_tasks) >= 5:
+            print ("...[f] show full completed tasks")
+    elif completed_shown == True:
         for completed in completed_tasks:
-            print ("✓" + completed)
+            print("✓" + completed)
+        print ("[f] hide completed tasks")
     
     print("\n" + set_error)
     set_error = ""
@@ -189,7 +198,10 @@ while not choice or choice != "e":
                             files_txt.write(file)
             except Exception as error:
                 set_error = str(error)
-                
+    
+    if choice.lower() == "f":
+        completed_shown = not completed_shown
+        
     #DEBUG
     if choice.lower() == "reset":
         with open("files.txt", "r") as files_txt:
@@ -201,3 +213,9 @@ while not choice or choice != "e":
         with open("files.txt", "w+") as file_names:
             file_names.truncate(0)
         reset = True
+    
+    # add functionality to delete lists 
+    # try:choice.split
+    # if choice.split(" ")[0] == "reset":
+    #     
+    
