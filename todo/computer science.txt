@@ -1,4 +1,0 @@
-~learn flask
-~learn html
-~learn how to use both flask, html, and sql for site building
-~create entity relationship diagram for tpsecurity project
