@@ -6,17 +6,11 @@ media.txt,~consider having maya replace mariam, with mariam?
 
 maths.txt,~do maths homework
 
-maths.txt,~lah
+EPQ.txt,~complete project time plan
 
-maths.txt,~asoaoakdoakd
+general.txt,~fix delete()
 
-maths.txt,~la
+media.txt,~delay/reschedule photoshoot to same day as filming
 
-maths.txt,~asokaodk
-
-maths.txt,~aspokdpakd
-
-maths.txt,~adpkadpkadadadadfa
-
-maths.txt,~adplff4
+media.txt,~upload storyboard to slides
 

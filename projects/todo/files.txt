@@ -1,4 +1,5 @@
-media
-computer science
-EPQ
 maths
+computer science
+general
+media
+EPQ

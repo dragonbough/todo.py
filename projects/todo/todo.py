@@ -52,6 +52,7 @@ def delete(filename, task_index):
             raise IndexError("Task index outside of range")
         tasks.pop(task_index)
         #clears file
+        todo.seek(0)
         todo.truncate(0)
         if tasks:
             for task in tasks:
@@ -146,7 +147,7 @@ while not choice or choice != "e":
         
     elif choice.lower() == "a":
         try:
-            append(current_file, input("\n~"))
+            append(current_file, str(input("\n~")))
         except Exception as error:
             set_error = str(error)
                                 
@@ -192,6 +193,7 @@ while not choice or choice != "e":
                 with open("files.txt", "w") as files_txt:
                     new_latest = files.pop(index)
                     files.append(new_latest)
+                    files_txt.seek(0)
                     files_txt.truncate(0)
                     for file in files:
                         if file:
@@ -209,8 +211,10 @@ while not choice or choice != "e":
             for file in files:
                 os.remove(file.strip()+".txt")
         with open("completed.txt", "w+") as completed:
+            completed.seek(0)
             completed.truncate(0)
         with open("files.txt", "w+") as file_names:
+            completed.seek(0)
             file_names.truncate(0)
         reset = True
     
