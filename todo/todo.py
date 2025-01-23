@@ -1,4 +1,5 @@
 import os
+import sys
 
 completed = open("completed.txt", "a")
 completed.close()
@@ -204,6 +205,9 @@ while not choice or choice != "e":
     if choice.lower() == "f":
         completed_shown = not completed_shown
         
+    if choice.lower() == "e":
+        sys.exit()
+    
     #DEBUG
     if choice.lower() == "reset":
         with open("files.txt", "r") as files_txt:
@@ -217,6 +221,7 @@ while not choice or choice != "e":
             completed.seek(0)
             file_names.truncate(0)
         reset = True
+    
     
     # add functionality to delete lists 
     # try:choice.split
