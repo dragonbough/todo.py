@@ -186,21 +186,21 @@ while not choice or choice != "e":
             index = int(input("index:\n")) - 1
         except Exception as error:
             set_error = str(error)
-            
-        if index == len(files):
-            new_file = True
-        else:
-            try:
-                with open("files.txt", "w") as files_txt:
-                    new_latest = files.pop(index)
-                    files.append(new_latest)
-                    files_txt.seek(0)
-                    files_txt.truncate(0)
-                    for file in files:
-                        if file:
-                            files_txt.write(file)
-            except Exception as error:
-                set_error = str(error)
+        else: 
+            if index == len(files):
+                new_file = True
+            else:
+                try:
+                    with open("files.txt", "w") as files_txt:
+                        new_latest = files.pop(index)
+                        files.append(new_latest)
+                        files_txt.seek(0)
+                        files_txt.truncate(0)
+                        for file in files:
+                            if file:
+                                files_txt.write(file)
+                except Exception as error:
+                    set_error = str(error)
     
     if choice.lower() == "f":
         completed_shown = not completed_shown
