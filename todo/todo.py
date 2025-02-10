@@ -61,6 +61,19 @@ def delete(filename, task_index):
         else:
             return
         
+def delete_file(filename):
+    if os.path.exists(filename):
+        os.remove(filename)
+        with open("files.txt", "r+") as files:
+            file_names = list(files)
+            file_names.remove(filename.strip(".txt") + "\n")
+            for file in file_names:
+                files.write(file)
+        return
+    else:
+        print("The file does not exist")
+        return 
+        
 #takes in index of task, task replaced with strikethrough version, encoding changed for strikethrough
 def complete(filename, task_index):
     with open(filename, "r") as todo:
@@ -129,7 +142,7 @@ while not choice or choice != "e":
     
     print("\n" + set_error)
     set_error = ""
-    choice = input("[c] mark task completed  [a] append task  [d] delete task  [s] switch lists  [e] exit\n")
+    choice = input("[c] mark task completed  [a] append task  [d] delete task  [df] delete list  [s] switch lists  [e] exit\n")
     
     if choice.lower() == "c":
         print (" ")
@@ -170,6 +183,9 @@ while not choice or choice != "e":
                 delete(current_file, index)
             except Exception as error:
                 set_error = str(error)
+                
+    if choice.lower() == "df":
+        delete_file(current_file)
             
     if choice.lower() == "s":
         choice = "."
@@ -180,7 +196,7 @@ while not choice or choice != "e":
                 print (f"~{file_index+1}~{files[file_index]}")
         except Exception as error:
             set_error = str(error)
-            continue
+            continue 
         print(f"~{len(files)+1}~ *add new list*")
         try:
             index = int(input("index:\n")) - 1
