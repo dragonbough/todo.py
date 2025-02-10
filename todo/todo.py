@@ -67,6 +67,8 @@ def delete_file(filename):
         with open("files.txt", "r+") as files:
             file_names = list(files)
             file_names.remove(filename.strip(".txt") + "\n")
+            files.seek(0)
+            files.truncate(0)
             for file in file_names:
                 files.write(file)
         return
