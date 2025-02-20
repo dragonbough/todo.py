@@ -4,6 +4,14 @@ import sys
 completed = open("completed.txt", "a")
 completed.close()
 
+def clear_screen():
+    # For Windows
+    if os.name == 'nt':
+        _ = os.system('cls')
+    # For macOS and Linux
+    else:
+        _ = os.system('clear')
+
 def init(name):
     if type(name) is not str:
         return None
@@ -14,6 +22,7 @@ def init(name):
 
 #latest reads last line of todo list 
 def display(filename):
+    
     with open(filename, "r") as todo:
         tasks = list(todo)
         if tasks:
@@ -85,7 +94,6 @@ def complete(filename, task_index):
     with open("completed.txt", "a+") as completed:
         completed.write(str(filename) + "," + str(tasks[task_index]) + "\n")
         
-        
 ##################
 
 choice = "."
@@ -114,6 +122,8 @@ while not choice or choice != "e":
                 while type(latest_file) is not str or not latest_file or latest_file + "\n" in file_names:
                     latest_file = input("Enter todo list name:\n")
     ##################################################
+    
+    clear_screen()
     
     current_file = init(latest_file)
     
