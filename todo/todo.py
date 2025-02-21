@@ -170,7 +170,7 @@ while not choice or choice != "e":
     set_error = ""
     choice = input("[c] mark task completed  [a] append task  [d] delete task  [df] delete list  [s] switch lists  [e] exit\n")
     
-    if choice.lower() == "c":
+    if choice.lower().strip() == "c":
         print (" ")
         try:
             tasks = display(current_file)
@@ -185,13 +185,13 @@ while not choice or choice != "e":
         else:
             complete(current_file, index)
         
-    elif choice.lower() == "a":
+    elif choice.lower().strip() == "a":
         try:
             append(current_file, str(input("\n~")))
         except Exception as error:
             set_error = str(error)
                                 
-    if choice.lower() == "d":
+    if choice.lower().strip() == "d":
         print (" ")
         try:
             tasks = display(current_file)
@@ -210,16 +210,16 @@ while not choice or choice != "e":
             except Exception as error:
                 set_error = str(error)
                 
-    if choice.lower() == "df":
+    if choice.lower().strip() == "df":
         print("\nAre you sure you want to delete this file?")
         try:
             sure = input("[y] yes  [n] no\n") 
-            if sure.lower() == "y":
+            if sure.lower().strip() == "y":
                 delete_file(current_file)
         except Exception as error:
             set_error = str(error)
             
-    if choice.lower() == "s":
+    if choice.lower().strip() == "s":
         choice = "."
         print(" ")
         try:
@@ -250,14 +250,14 @@ while not choice or choice != "e":
                 except Exception as error:
                     set_error = str(error)
     
-    if choice.lower() == "f":
+    if choice.lower().strip() == "f":
         completed_shown = not completed_shown
         
-    if choice.lower() == "e":
+    if choice.lower().strip() == "e":
         sys.exit()
     
     #DEBUG
-    if choice.lower() == "reset":
+    if choice.lower().strip() == "reset":
         with open("files.txt", "r") as files_txt:
             files = list(files_txt)
             for file in files:
