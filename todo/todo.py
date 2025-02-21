@@ -80,6 +80,16 @@ def delete_file(filename):
             files.truncate(0)
             for file in file_names:
                 files.write(file)
+        with open("completed.txt", "r+") as completed:
+            completed_tasks = list(completed)
+            for task in completed_tasks:
+                if task.split(",")[0] == filename:
+                    completed_tasks.remove(task)
+                completed.seek(0)
+                completed.truncate(0)
+            for task in completed_tasks:
+                if task:
+                    completed.write(task)
         return
     else:
         print("The file does not exist")
