@@ -74,8 +74,8 @@ def delete_file(filename):
     if os.path.exists(filename):
         os.remove(filename)
         with open("files.txt", "r+") as files:
-            file_names = list(files)
-            file_names.remove(filename.strip(".txt") + "\n")
+            file_names = list(files) 
+            file_names.remove(filename.replace(".txt", "\n"))
             files.seek(0)
             files.truncate(0)
             for file in file_names:
@@ -101,6 +101,7 @@ set_error = ""
 reset = False
 new_file = False
 completed_shown = False
+debug = False
 
 while not choice or choice != "e":
     
@@ -123,7 +124,10 @@ while not choice or choice != "e":
                     latest_file = input("Enter todo list name:\n")
     ##################################################
     
-    clear_screen()
+    if not debug:
+        clear_screen()
+    else:
+        print("\n#######DEBUG MODE#######")
     
     current_file = init(latest_file)
     
@@ -145,7 +149,7 @@ while not choice or choice != "e":
         for completed_num in range(len(completed_tasks)):
                 if completed_num <= 4:
                     print ("✓" + completed_tasks[completed_num])
-        if len(completed_tasks) >= 5:
+        if len(completed_tasks) > 5:
             print ("...[f] show full completed tasks")
     elif completed_shown == True:
         for completed in completed_tasks:
@@ -197,7 +201,13 @@ while not choice or choice != "e":
                 set_error = str(error)
                 
     if choice.lower() == "df":
-        delete_file(current_file)
+        print("\nAre you sure you want to delete this file?")
+        try:
+            sure = input("[y] yes  [n] no\n") 
+            if sure.lower() == "y":
+                delete_file(current_file)
+        except Exception as error:
+            set_error = str(error)
             
     if choice.lower() == "s":
         choice = "."
@@ -249,6 +259,9 @@ while not choice or choice != "e":
             completed.seek(0)
             file_names.truncate(0)
         reset = True
+        
+    if choice == "#@#":
+        debug = not debug
     
     
     # add functionality to delete lists 
