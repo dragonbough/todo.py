@@ -52,7 +52,8 @@ def append(filename, task):
         if len(task) == 0:
             raise ValueError("Task is empty")
             return
-        todo.write("~" + task + "\n")
+        todo.write("~" + task.lstrip() + "\n")
+        
 
 #delete takes in task line number to delete and removes it from text file
 def delete(filename, task_index):
@@ -168,9 +169,9 @@ while not choice or choice != "e":
     
     print("\n" + set_error)
     set_error = ""
-    choice = input("[c] mark task completed  [a] append task  [d] delete task  [df] delete list  [s] switch lists  [e] exit\n")
+    choice = input("[c] mark task completed  [a] append task  [d] delete task  [df] delete list  [s] switch lists  [e] exit\n").lower().strip()
     
-    if choice.lower().strip() == "c":
+    if choice == "c":
         print (" ")
         try:
             tasks = display(current_file)
@@ -185,13 +186,13 @@ while not choice or choice != "e":
         else:
             complete(current_file, index)
         
-    elif choice.lower().strip() == "a":
+    elif choice == "a":
         try:
             append(current_file, str(input("\n~")))
         except Exception as error:
             set_error = str(error)
                                 
-    if choice.lower().strip() == "d":
+    if choice == "d":
         print (" ")
         try:
             tasks = display(current_file)
@@ -210,7 +211,7 @@ while not choice or choice != "e":
             except Exception as error:
                 set_error = str(error)
                 
-    if choice.lower().strip() == "df":
+    if choice == "df":
         print("\nAre you sure you want to delete this file?")
         try:
             sure = input("[y] yes  [n] no\n") 
@@ -219,7 +220,7 @@ while not choice or choice != "e":
         except Exception as error:
             set_error = str(error)
             
-    if choice.lower().strip() == "s":
+    if choice == "s":
         choice = "."
         print(" ")
         try:
@@ -250,14 +251,14 @@ while not choice or choice != "e":
                 except Exception as error:
                     set_error = str(error)
     
-    if choice.lower().strip() == "f":
+    if choice == "f":
         completed_shown = not completed_shown
         
-    if choice.lower().strip() == "e":
+    if choice == "e":
         sys.exit()
     
     #DEBUG
-    if choice.lower().strip() == "reset":
+    if choice == "reset":
         with open("files.txt", "r") as files_txt:
             files = list(files_txt)
             for file in files:
