@@ -1,1 +1,1 @@
-command line todolist project programmed in python
+command line todo list made in python
