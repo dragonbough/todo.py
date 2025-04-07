@@ -128,10 +128,10 @@ while not choice or choice != "e":
         if new_file == True or not file_names:
             new_file = False 
             latest_file = input("\nEnter todo list name:\n")
-            if type(latest_file) is str and latest_file and latest_file + "\n" not in file_names:
+            if latest_file and latest_file + "\n" not in file_names and "/" not in latest_file and "\\" not in latest_file:
                 files.write(latest_file + "\n")
             elif reset == False:
-                while type(latest_file) is not str or not latest_file or latest_file + "\n" in file_names:
+                while not latest_file or latest_file + "\n" in file_names or "/" in latest_file or "\\" in latest_file:
                     latest_file = input("Enter todo list name:\n")
     ##################################################
     
@@ -255,10 +255,11 @@ while not choice or choice != "e":
         completed_shown = not completed_shown
         
     if choice == "e":
+        clear_screen()
         sys.exit()
     
     #DEBUG
-    if choice == "reset":
+    if choice == "DEBUG MODE RESET ACTIVATION STRING":
         with open("files.txt", "r") as files_txt:
             files = list(files_txt)
             for file in files:
