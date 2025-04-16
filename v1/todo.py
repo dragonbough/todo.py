@@ -184,7 +184,10 @@ while not choice or choice != "e":
         except Exception as error:
             set_error = str(error)
         else:
-            complete(current_file, index)
+            if index > len(tasks):
+                set_error = "List index out of range"
+            else:
+                complete(current_file, index)
         
     elif choice == "a":
         try:
@@ -236,7 +239,9 @@ while not choice or choice != "e":
         except Exception as error:
             set_error = str(error)
         else: 
-            if index == len(files):
+            if index > len(files):
+                set_error = "List index out of range"
+            elif index == len(files):
                 new_file = True
             else:
                 try:
